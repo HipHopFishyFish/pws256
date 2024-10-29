@@ -3,7 +3,7 @@ This is a python module for username and passwords with hash functions, which yo
 
 
 ## Example
-
+```
 >>> import pws256 as pws
 >>> pw = pws.Password()
 >>> pw.hash_func
@@ -13,3 +13,4 @@ This is a python module for username and passwords with hash functions, which yo
 >>> pw.hash_func
 <hashlib.sha512>
 
+```
