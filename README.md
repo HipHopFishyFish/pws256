@@ -24,10 +24,22 @@ True
 >>> pw2.hashed # Includes salt so when reversed, salt is at the back
 "drowssap...bv4w75..."
 >>> import pws256.users as u
->>> pw3 = Password("hello")
+>>> pw3 = pws256.Password("hello")
 >>> usr = u.User("me", pw3)
 >>> usr.save_to_file("test.csv")
 >>> user = u.User.load_from_file("me", "test.csv")
 >>> user.password.verify("hello")
 True
+>>> pw4 = pws256.defaultpass("hello")
+>>> pw4.salt = "abc"
+Traceback (most recent call last):
+...
+>>> pw4.salt_settable(True)
+>>> pw4.salt = "abc"
+>>> pw4.salt
+"abc"
+>>> pw4.salt_settable(False)
+Traceback (most recent call last):
+...
+>>>
 ```
