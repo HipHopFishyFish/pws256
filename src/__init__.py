@@ -60,7 +60,10 @@ class _Password(Validator):
 
     @property
     def salt(self):
-        return self.__salt
+        return self._salt
+    
+    def get_salt(self):
+        return self.salt
     
     @salt.setter
     def salt(self, val):
@@ -69,7 +72,7 @@ class _Password(Validator):
                 "You can't set the salt value"
             )
         else:
-            self.__salt = val
+            self._salt = val
     
     @property
     def hsh_after(self):

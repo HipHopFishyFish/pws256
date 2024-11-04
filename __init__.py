@@ -16,5 +16,3 @@ from .src.users import User""")
 
 setupchecks()
 from .srcimport import *
-from .usersrcimport import *
-del setupchecks, os

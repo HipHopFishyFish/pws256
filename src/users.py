@@ -28,7 +28,6 @@ class User:
         for line in file.readlines():
             line = line[:-1]
             if line.split(",")[0] == username:
-                print(line.split(",")[1], line.split(",")[2])
                 return User(username, _Password(
                     hashed = line.split(",")[1],
                     hsh_func = hsh_func,
@@ -43,7 +42,7 @@ class User:
     def save_to_file(self, file: TextIOWrapper | str, close=False):
         if isinstance(file, str):
             file = open(file, "a")
-        file.write(f"{self.username},{self.password.hashed},{self.password.salt}\n")
+        file.write(f"{self.username},{self.password.hashed},{self.password.get_salt()}\n")
         if close:
             file.close()
         
