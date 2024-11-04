@@ -99,11 +99,15 @@ class _Password:
     def validate(self, other: str):
         "Validate a password using the hsh_func entered on creation"
         print(hl.sha256(other.encode()).hexdigest(), self.salt)
-        encoded = self.hsh_func(((self.salt + other) if self.hsh_enter == str else (self.salt + other).encode()))
+        encoded = self.hsh_func(((self.salt + other) if self._hsh_enter == str else (self.salt + other).encode()))
         if self.hsh_after:
             encoded = eval("encoded" + self.hsh_after, dict({"encoded": encoded})) # Add hsh_after e.g. hashlib.sha256(b"hello").hexdigest()
 
         return encoded == self.hashed
+    
+    def __repr__(self):
+        hsh_after = "" if self._hsh_after == None else self._hsh_after
+        return f"<<PWS256 PASSWORD: {self._hsh_func.__name__}(obj: {self._hsh_enter.__name__}){hsh_after}>>"
     
 
 
@@ -119,18 +123,27 @@ class Password(_Password):
 
     
 
-def defaultpass(raw: str):
-    return _Password(hl.sha256(raw.encode()).hexdigest(), hl.sha256, str, ".hexdigest()", secrets.token_hex(40))
+class defaultpass(Password):
+    def __init__(self, raw: str):
+        super().__init__(raw, hl.sha256, bytes, ".hexdigest()")
 
 
 PwsType = TypeVar("PwsType", Password, _Password)
 
 
 if __name__ == "__main__":
-    print("Using password: \"hello\" with sha256")
-    pw = Password("hello")
-    print("It is " + str(pw.validate("hello")) + " that the password is \"hello\".")
-    print("Using password: \"hello\" with reversed")
-    reverse = lambda x : "".join(reversed(x))
-    pw = Password("hello", reverse, str, None)
-    print("It is " + str(pw.validate("hello")) + " that the password is \"hello\".")
+    print("Password: \"hello\" with sha256\n\n")
+
+    pw = defaultpass("hello") # Generates internal code of sha256("hello".encode()).hexdigest()
+
+    print("Password is hello!" if pw.validate("hello") else "uh oh what did u do wrong")
+    print("\n")
+    print("Password: \"Hello\" with reversed function\n\n")
+    
+    def reverse(x):
+        return "".join(x)
+    
+    pw2 = Password("hello", hsh_func = reverse, hsh_enter = str, hsh_after = None) # Generates internal code of reverse("hello")
+
+    print("Password is hello!" if pw2.validate("hello") else "uh oh what did u do wrong")
+    
