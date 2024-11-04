@@ -29,6 +29,7 @@ import hashlib as hl
 import secrets
 import types
 from typing import TypeVar
+from .base import Validator, hash_password
 
 
 __all__ = [
@@ -40,18 +41,14 @@ __all__ = [
 
 class CantSetError(Exception): ...
 
-class _Password:
+class _Password(Validator):
     def __init__(self, hashed, hsh_func, hsh_enter, hsh_after, salt):
-        self.hashed = hashed
-        self._hsh_enter = hsh_enter
-        self._hsh_func = hsh_func
-        self._hsh_after = hsh_after
-        self.__salt = salt
+        super().__init__(hashed, hsh_func, hsh_enter, hsh_after, salt)
         self.__salt_settable = False
 
     @property
     def hsh_func(self):
-        return self._hsh_func
+        return self.__hsh_func
     
     @hsh_func.setter
     def hsh_func(self, obj):
@@ -59,7 +56,7 @@ class _Password:
             raise TypeError(
                 f"obj must be a function, not {obj.__class__.__name__}"
             )
-        self._hsh_func = obj
+        self.__hsh_func = obj
 
     @property
     def salt(self):
@@ -76,7 +73,7 @@ class _Password:
     
     @property
     def hsh_after(self):
-        return self._hsh_after
+        return self.__hsh_after
     
     @hsh_after.setter
     def hsh_after(self, obj):
@@ -93,30 +90,17 @@ class _Password:
                 )
             self.__salt_settable = which
         return self.__salt_settable
-
-    
-
-    def validate(self, other: str):
-        "Validate a password using the hsh_func entered on creation"
-        print(hl.sha256(other.encode()).hexdigest(), self.salt)
-        encoded = self.hsh_func(((self.salt + other) if self._hsh_enter == str else (self.salt + other).encode()))
-        if self.hsh_after:
-            encoded = eval("encoded" + self.hsh_after, dict({"encoded": encoded})) # Add hsh_after e.g. hashlib.sha256(b"hello").hexdigest()
-
-        return encoded == self.hashed
     
     def __repr__(self):
-        hsh_after = "" if self._hsh_after == None else self._hsh_after
-        return f"<<PWS256 PASSWORD: {self._hsh_func.__name__}(obj: {self._hsh_enter.__name__}){hsh_after}>>"
+        hsh_after = "" if self.__hsh_after == None else self.__hsh_after
+        return f"<<PWS256 PASSWORD: {self.__hsh_func.__name__}(obj: {self.__hsh_enter.__name__}){hsh_after}>>"
     
 
 
 class Password(_Password):
     def __init__(self, raw: str, hsh_func=hl.sha256, hsh_enter: str | bytes = bytes, hsh_after = ".hexdigest()"):
-        salt = secrets.token_hex(40)
-        encoded = hsh_func(((salt + raw) if hsh_enter == str else (salt + raw).encode()))
-        if hsh_after:
-            encoded = eval("encoded" + hsh_after, dict({"encoded": encoded})) # Add hsh_after e.g. hashlib.sha256(b"hello").hexdigest()
+        salt = secrets.token_hex(32)
+        encoded = hash_password(raw, hsh_func, hsh_enter, hsh_after, salt)
 
 
         super().__init__(encoded, hsh_func, hsh_enter, hsh_after, salt) # Initialise _Password with the result of the password
@@ -138,7 +122,7 @@ if __name__ == "__main__":
 
     print("Password is hello!" if pw.validate("hello") else "uh oh what did u do wrong")
     print("\n")
-    print("Password: \"Hello\" with reversed function\n\n")
+    print("Password: \"hello\" with reversed function\n\n")
     
     def reverse(x):
         return "".join(x)
