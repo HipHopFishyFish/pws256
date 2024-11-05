@@ -1,18 +1,33 @@
-import os
+"""
+This is used to verify passwords with custom hash functions (or sha256 by default)
 
-def setupchecks():
-    path = os.path.dirname(__file__) + "/srcimport.py"
-    with open(path, "w") as file:
-        file.write("""\"THIS FILE IS PREGENERATED. ANY CHANGE YOU MAKE WILL BE OVERWRITTEN\"
+--- pws256/
 
-from .src import _Password, Password, PwsType, defaultpass""")
-        
-    path = os.path.dirname(__file__) + "/usersrcimport.py"
-    with open(path, "w") as file:
-        file.write("""\"THIS FILE IS PREGENERATED. ANY CHANGE YOU MAKE WILL BE OVERWRITTEN\"
+>>> import pws256
+>>> pw = pws256.Password("password")
+>>> pw.verify("password")
+True
+>>> pw.verify("pasword")
+False
+>>> pw.hsh_func
+<built-in function openssl_sha256>
+>>> pw2 = pws256.Password(
+...    raw = "password",
+...    hsh_func = lambda x : "".join(reversed(x)),
+...    hsh_enter = str,
+...    hsh_after = None
+...)
+...
+>>> pw2.verify("password")
+True
+>>> pw2.hashed
+"drowssap"
+>>>
+"""
 
-from .src.users import User""")
-    
+from ._setup.setup import setupchecks
 
 setupchecks()
-from .srcimport import *
+del setupchecks
+
+from ._setup.srcimport import *

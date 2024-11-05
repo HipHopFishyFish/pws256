@@ -1,11 +1,3 @@
-"""
-Module used for custom user classes to write in files
-
---- pws256/users
-
-"""
-
-
 import hashlib as hl
 from io import TextIOWrapper
 from . import _Password, PwsType
