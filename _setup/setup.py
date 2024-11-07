@@ -13,4 +13,10 @@ from ..src import _Password, Password, PwsType, defaultpass""")
 
 from ..src.users import User""")
         
+    path = os.path.dirname(__file__) + "/rsasrcimport.py"
+    with open(path, "w") as file:
+        file.write("""\"THIS FILE IS PREGENERATED. ANY CHANGE YOU MAKE WILL BE OVERWRITTEN\"
+
+from ..src.rsa import PublicKey, PrivateKey, KeyPair""")
+        
 
