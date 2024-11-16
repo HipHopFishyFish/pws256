@@ -42,6 +42,6 @@ class User:
     def to_dict(self):
         return {
             "username": self.username,
-            "password": self.password.to_json()
+            "password": self.password.to_dict()
         }
         

@@ -43,3 +43,66 @@ Traceback (most recent call last):
 ...
 >>>
 ```
+
+
+# pws256.Password()
+## Normal pws256.Password()
+
+```
+pw = pws256.Password(
+    raw: str
+)
+```
+
+Creates a password that can be verified and shaped in different ways
+
+## Custom pws256.Password()
+
+```
+pw = pws256.Password(
+    raw: str,
+    hsh_func: function | class = hashlib.sha256,
+    hsh_enter: type[str] | type[bytes] = type[bytes],
+    hsh_after: str = ".hexdigest()"
+)
+```
+
+Create a Password with a custom function that is called, type that goes into that function, and what comes after e.g. ```.hexdigest()```
+
+### Initialisation Parameters
+
+#### *hsh_func*
+hsh_func is a parameter that must be a function.  
+If you had a function called reverse and it took the reverse of a string,  
+to use it here, you would have to have your function as the hsh_func
+
+#### *hsh_enter*
+hsh_enter determines which type the raw string should be before it enters the hash function  
+hsh_enter is default as bytes, but if your function took in a string, you should  change it to str
+
+#### *hsh_after*
+hsh_after detirmines what to put after the function call using eval()  
+for example, if you had hashlib.sha256 as your hsh_func, you should have  
+".hexdigest()" as your hsh_after. If you don't want to call a method after,  
+put hsh_after as None
+
+
+### Methods
+
+#### *validate()*
+The validate method validates the password against a string
+```
+pw = pws256.Password("hello")
+pw.validate("hello") # returns True
+pw.validate("bello") # returns False
+```
+
+
+# pws256.defaultpass()
+Derived from Password and has no parameters to confuse you!
+```
+pw = pws256.defaultpass(
+    raw: str
+)
+```
+
