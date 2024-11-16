@@ -36,7 +36,7 @@ except:
     pass
 
 
-from ._setup.setup import setupchecks
+from pws256._setup.setup import setupchecks
 
 setupchecks()
 del setupchecks, datetime, os
@@ -45,4 +45,4 @@ try:
 except:
     pass
 
-from ._setup.srcimport import *
+from pws256._setup.srcimport import *
