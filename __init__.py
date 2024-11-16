@@ -24,6 +24,9 @@ True
 "drowssap"
 >>>
 """
+
+__version__ = "1.1.5"
+
 import os, datetime
 try:
     if os.environ["PWS256-VERBOSE"] == "3":

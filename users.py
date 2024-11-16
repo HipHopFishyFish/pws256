@@ -12,8 +12,8 @@ Module used for custom user classes to write in files
 >>> usr.password.validate("hallo")
 True
 """
-from ._setup.setup import setupchecks
+from pws256._setup.setup import setupchecks
 
 setupchecks()
 del setupchecks
-from ._setup.usersrcimport import *
+from pws256._setup.usersrcimport import *

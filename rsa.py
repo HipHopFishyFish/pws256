@@ -1,7 +1,7 @@
-from ._setup.setup import setupchecks
+from pws256._setup.setup import setupchecks
 
 setupchecks()
 
 del setupchecks
 
-from ._setup.rsasrcimport import *
+from pws256._setup.rsasrcimport import *

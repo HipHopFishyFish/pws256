@@ -29,7 +29,7 @@ import hashlib as hl
 import secrets
 import types
 from typing import TypeVar
-from .base import Validator, hash_password
+from pws256.src.base import Validator, hash_password
 
 
 __all__ = [
