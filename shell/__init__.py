@@ -177,6 +177,7 @@ def run(txt: str, stm={}, raise_=True):
 
 
 def _test():
+    stm = {}
     while True:
         try:
             ans, stm = run(input("> "), stm)
