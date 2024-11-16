@@ -1,6 +1,7 @@
 import hashlib as hl
 from io import TextIOWrapper
-from pws256 import _Password, PwsType
+from pws256 import PwsType
+from pws256.src import _Password
 
 
 class User:

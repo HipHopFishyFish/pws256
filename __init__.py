@@ -25,7 +25,7 @@ True
 >>>
 """
 
-__version__ = "1.1.5"
+__version__ = "1.1.12"
 
 import os, datetime
 try:
