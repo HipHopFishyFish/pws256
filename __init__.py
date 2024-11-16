@@ -24,10 +24,22 @@ True
 "drowssap"
 >>>
 """
+import os, datetime
+try:
+    if os.environ["PWS256-VERBOSE"] == "3":
+        now = datetime.datetime.now().strftime("%H:%M:%S")
+        print(f"[{now}] pws256 start")
+except:
+    pass
+
 
 from ._setup.setup import setupchecks
 
 setupchecks()
-del setupchecks
+del setupchecks, datetime, os
+try:
+    del now
+except:
+    pass
 
 from ._setup.srcimport import *

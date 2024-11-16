@@ -98,6 +98,15 @@ class _Password(Validator):
         hsh_after = "" if self.__hsh_after == None else self.__hsh_after
         return f"<<PWS256 PASSWORD: {self.__hsh_func.__name__}(obj: {self.__hsh_enter.__name__}){hsh_after}>>"
     
+    def to_json(self):
+        return {
+            "hashed": self.hashed,
+            "hsh_func": "sha256" if self._Validator__hsh_func == hl.sha256 else "sha512",  # 2 Choices for the shell version
+            "hsh_enter": "str" if self._Validator__hsh_enter == str else "bytes",
+            "hsh_after": self._Validator__hsh_after,
+            "salt": self._salt
+        }
+    
 
 
 class Password(_Password):

@@ -37,4 +37,10 @@ class User:
         file.write(f"{self.username},{self.password.hashed},{self.password.get_salt()}\n")
         if close:
             file.close()
+
+    def to_dict(self):
+        return {
+            "username": self.username,
+            "password": self.password.to_json()
+        }
         
