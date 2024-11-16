@@ -176,16 +176,16 @@ def run(txt: str, stm={}, raise_=True):
     return ans, stm
 
 
-
-if __name__ == "__main__":
+def _test():
     while True:
         try:
-            txt = input("> ")
+            ans, stm = run(input("> "), stm)
         except KeyboardInterrupt:
             break
+        if ans != None:
+            print(ans)
 
-        res = run(txt, stm)
-        if not isinstance(res, Raised):
-            stm = res
 
-        
+
+if __name__ == "__main__":
+    _test()
