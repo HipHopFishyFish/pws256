@@ -106,3 +106,39 @@ pw = pws256.defaultpass(
 )
 ```
 
+# pws256.users.User()
+```
+usr = users.User("username", pws256.Password(...))
+```
+
+You can create a user with users.User()  
+The password parameter has to be a pws256.Password() or has to be  
+derived from pws256._Password().  
+
+### Initialisation Parameters
+
+#### *username*
+A custom username that must be a string.
+
+#### *password*
+A password that is a class derived from _Password()  
+If the class is not, it will throw an error.  
+
+### Methods
+
+#### *save_to_file(filename: str | TextIOWrapper, close: bool)*
+
+You can save it to a file by using this method. The close param  
+at the end can be used if you want to close the file afterwards.
+
+#### (classmethod) *load_from_file(username: str, filename: str | TextIOWrapper, ...)*
+
+```
+users.User.load_from_file("username", "doc.csv")
+```
+
+You can use this method to get a new User from a file using a username
+If you had a user who's username was "username", you could get it out from  
+doc.csv using this method.
+
+
