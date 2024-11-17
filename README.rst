@@ -16,7 +16,7 @@ Example
    >>> pw.verify("pasword")
    False
    >>> pw.hsh_func
-   <built-in function openssl_sha256>
+   
    >>> pw2 = pws256.Password(
    ...    raw = "password",
    ...    hsh_func = lambda x : "".join(reversed(x)),
@@ -48,27 +48,8 @@ Example
    ...
    >>>
 
-.. raw:: html
-
-   <h2>
-
 pws256.Password()
-
-.. raw:: html
-
-   </h2>
-
-.. raw:: html
-
-   <details>
-
-.. raw:: html
-
-   <summary>
-
-.. raw:: html
-
-   </summary>
+=================
 
 Normal pws256.Password()
 ------------------------
@@ -94,7 +75,7 @@ Custom pws256.Password()
    )
 
 Create a Password with a custom function that is called, type that goes
-into that function, and what comes after e.g. ``.hexdigest()``
+into that function, and what comes after e.g. \ ``.hexdigest()``
 
 Initialisation Parameters
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -121,7 +102,7 @@ Initialisation Parameters
 | hsh_after detirmines what to put after the function call using eval()
 | for example, if you had hashlib.sha256 as your hsh_func, you should
   have
-| “.hexdigest()” as your hsh_after. If you don't want to call a method
+| “.hexdigest()” as your hsh_after. If you don’t want to call a method
   after,
 | put hsh_after as None
 
@@ -139,24 +120,8 @@ The validate method validates the password against a string
    pw.validate("hello") # returns True
    pw.validate("bello") # returns False
 
-.. raw:: html
-
-   </details>
-
 pws256.defaultpass()
 ====================
-
-.. raw:: html
-
-   <details>
-
-.. raw:: html
-
-   <summary>
-
-.. raw:: html
-
-   </summary>
 
 Derived from Password and has no parameters to confuse you!
 
@@ -165,10 +130,6 @@ Derived from Password and has no parameters to confuse you!
    pw = pws256.defaultpass(
        raw: str
    )
-
-.. raw:: html
-
-   </details>
 
 pws256.users.User()
 ===================
@@ -216,6 +177,6 @@ Methods
    users.User.load_from_file("username", "doc.csv")
 
 | You can use this method to get a new User from a file using a username
-  If you had a user who's username was “username”, you could get it out
+  If you had a user who’s username was “username”, you could get it out
   from
 | doc.csv using this method.
